@@ -66,7 +66,7 @@ def get_latest_file_from_dirs(dirs):
 
 def resolve_uploaded_file(settings, input_config):
     uploads_dir = "uploads"
-    user_partial_dir = "user_partial_uploads"
+    user_partial_dir = "from_paimon_moe"
     fallback_file = input_config.get("import_file", "paimon_data/raw.json")
 
     if settings.get("merge_uploads", False):
@@ -94,7 +94,7 @@ def resolve_uploaded_file(settings, input_config):
 
 def create_default_config(config_path: str, main_config_path: str):
     uploads_dir = "uploads"
-    user_partial_dir = "user_partial_uploads"
+    user_partial_dir = "from_paimon_moe"
 
     ensure_directory_exists(uploads_dir)
     ensure_directory_exists(user_partial_dir)
