@@ -1,57 +1,139 @@
-# Genshin Achievement Auto-Marker
+# 🌟 Paimon.moe Achievement Auto-Marker
 
-🎮 **Mark your Genshin Impact achievements automatically using just a video** — no login, no password, no API keys.
+🎮 Automatically mark your **Genshin Impact achievements** using just a **video recording** — no login, no API, no hassle!
 
-> 🏆 Built for "Wonders of the World" (800+ achievements), but works for all 1500+. Just process each section separately.
-
----
-
-## 🚀 Quick Start
-
-1. 📸 Record a **60s video** of your achievement list — cropped to show only the right side.
-2. 💾 Save the video as `sample.mp4` in the root folder.
-3. 🐍 Install dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. ▶️ Run the program:
-
-   ```bash
-   python main.py
-   ```
-
-> 💡 You can also convert a folder of screenshots into a **1 FPS video** and process that.
+> 🏆 Built for “Wonders of the World” (800+ achievements), but supports **all 1500+ achievements** if used in sections.
 
 ---
 
 ## 🧠 How It Works
 
-1. Converts video into image frames.
-2. Filters out duplicate frames.
-3. Extracts text using OCR.
-4. Matches achievements using a local Paimon.moe database.
-5. Generates an importable file for [paimon.moe](https://paimon.moe).
+1. 🎞️ Extracts image frames from your video
+2. ♻️ Filters out duplicate/unchanged frames
+3. 🔍 Uses OCR to read text from each frame
+4. 🧠 Matches achievements using a local database from [paimon.moe](https://paimon.moe)
+5. 📤 Generates an importable file to upload to the site
 
-✅ **Tested** on 700+ achievements → 600+ matched correctly, **0 incorrect**.
+✅ Tested on 700+ achievements of **Wonders Of World** — 600+ matched correctly, **0 incorrect matches** (Wonders of the World only).
+✅ Full 1500+ list yields **80–95% accuracy** depending on settings.
 
 ⚠️ *It never falsely marks uncompleted achievements.*
 
 ---
 
-## 📂 Folder Structure (After First Run)
+## 🚀 Quick Start
 
-* `data/frames/` → Extracted frames
-* `data/ocr/` → OCR text (do not edit)
-* `data/error/` → Mismatches & logs
-* `uploads/` → Final file for paimon.moe
-* `logs/` → Debug info
+1. 📸 Record a 60s video of your achievement list (right panel only).
+
+2. 💾 Save it as `sample.mp4` in the root folder.
+
+3. 🐍 Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. ▶️ Run the tool:
+
+   ```bash
+   python main.py
+   ```
 
 ---
 
-## ⚙️ Configuration
+## 📽️ Recording Tips
 
-Two config files control the program:
+✅ Best practices for best results:
+
+* Crop to **right-side achievement panel** only
+* Start from the **first completed** achievement
+* Use **1080p or better** resolution
+* Scroll **slowly** using scrollbar
+* Use **60–120 FPS** if possible
+
+---
+
+## 🧪 On My System (Performance Example)
+
+💻 Specs: RTX 3060, Ryzen 5 5600G, 16GB RAM
+
+* GPU recommended
+* \~15 minutes per video of length 60s and 60fps
+* OCR takes most of the time (rest finishes in 2–3 mins)
+
+---
+
+# 🛠️ First Run & Initialization (Mandatory)
+
+After installing requirements, run:
+
+```bash
+python main.py
+```
+
+This initializes all folders and config files.
+
+---
+
+## 🆕 For New Users (Recommended)
+
+1. 🎥 Place your scroll video as `sample.mp4` next to `main.py`
+
+2. ▶️ Run:
+
+   ```bash
+   python main.py
+   ```
+
+3. 📤 Upload the file from the `uploads/` folder to [paimon.moe](https://paimon.moe)
+
+✅ That’s it! Just record → run → upload to paimon.moe.
+
+---
+
+## 🔁 Merge Already Marked Achievements (From Paimon.moe)
+
+If you've already marked some achievements on [paimon.moe](https://paimon.moe):
+
+1. 📥 Download your `.json` file from the website
+2. 📂 Place it inside a folder called `from_paimon_moe/`
+3. ❌ Make sure `uploads/` don't exists, else delete it
+4. 🎞️ Place your new scroll video as `sample.mp4`
+5. ▶️ Run:
+
+   ```bash
+   python main.py
+   ```
+
+✅ It will merge new achievements with the ones you've already marked.
+
+---
+
+## 🎬 Multiple Videos (2 Ways)
+
+### ✅ Option A: Merge Videos Before Processing (Recommended)
+
+1. Merge all your scroll clips into one single video
+2. Save as `sample.mp4` in the root folder
+3. Run the tool normally
+
+> 🎯 Cleaner, easier, prevents human errors from Option: B
+
+---
+
+### 🔁 Option B: Process Videos One-by-One
+
+1. Run your first scroll video — result appears in `uploads/`
+2. Move that file to the `from_paimon_moe/` folder
+3. Replace `sample.mp4` with the **next scroll video**
+4. Run again
+5. Repeat after each video
+
+✅ This lets the tool **build up your achievements** step-by-step.
+
+---
+
+## ⚙️ Advanced: Customize Accuracy
 
 ### `frame_extraction.toml`
 
@@ -59,128 +141,85 @@ Two config files control the program:
 diff_threshold = 1000000
 ```
 
-* Filters similar frames to reduce processing.
-* 🔼 Higher = stricter, fewer frames kept.
-* 🔽 Lower = more frames, better accuracy, slower.
-* 📌 Suggested range: 500000–2000000
+* Filters out duplicate-looking frames
+* 🔼 Higher = stricter, fewer frames, faster
+* 🔽 Lower = more frames, better accuracy
+* 📌 Recommended: 500,000 to 2,000,000
+
+---
 
 ### `import_generator.toml`
 
 ```toml
-threshold = 90
+threshold = 90 # 90 represents 90%
 ```
 
-* Fuzzy match accuracy between OCR and database.
-* 🔼 Higher = stricter (fewer false positives).
-* 🔽 Lower = more lenient (may increase errors).
-* 📌 Suggested range: 85–92
-
-🎞️ Default video: `sample.mp4` — can be changed post-init.
-
----
-
-## 📽️ Recording Tips
-
-* 📍 Crop to only the right achievement panel
-* ✅ Start from first **completed** achievement
-* 📺 Use **1080p** or better quality
-* 🖱️ Scroll slowly with scrollbar
-* 🎞️ Use 60–120 FPS for best OCR clarity
+* Controls fuzzy matching between OCR text and database
+* 🔼 Higher = fewer matches, less risk
+* 🔽 Lower = more matches, may include weak hits
+* 📌 Recommended: 82–92
+* ‼️Don't put 100. Or very close to 100.
 
 ---
 
-## 🧪 System Performance
+## 📁 Do Not Edit These Files
 
-⏱️ On RTX 3060, Ryzen 5 5600g, 16GB RAM:
-
-* \~15 minutes per 1-minute video
-* OCR is the bottleneck
-* GPU highly recommended
+* `data/` → Contains internal OCR data, extracted frames
+* `paimon_data/` → Holds the local Genshin DB. Update this after new game versions by replacing both `.json` files from repo
 
 ---
 
-## 🖼️ Screenshot Mode (Not Recommended)
+## ⚠️ Known Limitations
 
-* Take \~100 screenshots (\~8 achievements per screen) (manually)
-* Filenames don’t matter
-* 🌀 Convert to **1 FPS video** and process normally
-* ✅ Usually achieves **95-100% accuracy**
+* **Checklist Achievements:**
+  If an achievement has a checklist (e.g., 3 parts), only the **first item** is auto-marked.
+  You’ll need to mark the rest manually.
 
----
+* **English Only:**
+  Currently supports **English achievement titles only** — others will be skipped (not marked).
 
-## 🔒 Safe & Private
-
-✅ **100% offline and secure**:
-
-* ❌ No login / UID / account access
-* ❌ No online API calls or uploads
-* ✅ Works only on local pre-recorded video/screenshots
-* ✅ Output file is manually uploaded by you
+* **Not Fully Accurate:**
+  Might miss a few achievements. Usually, you’ll only need to review \~50–75 manually.
 
 ---
 
-## 📌 Do Not Edit
+## 🔒 100% Safe & Offline
 
-* `data/ocr/` → OCR raw data. Leave untouched.
-* `paimon_data/` → Stores the achievement DB. Only update with new Genshin versions (or ping me).
-
-📦 If you're uploading using multiple videos:
-
-* Download your current file from paimon.moe and replace the content with `raw.json` in `paimon_data/` folder.
-* This allows the tool to only mark **new achievements**.
-* You can also reuse and merge output from `uploads/` with existing raw\.json manually.
-* ⚠️ Future versions will support **auto-merging** to make this seamless.
+* ❌ No UID, login, or Genshin account required
+* ❌ No internet or API access needed
+* ✅ You just need a **scroll recording** — Genshin doesn’t even need to be installed
+* ✅ You control the upload — output stays on your device
 
 ---
 
-## ⚠️ Limitations
+## 🙌 Contributions & Feedback
 
-* 🔁 **Checklist Achievements:**
+* Found bugs? Got an idea?
+* PRs, suggestions, and even scroll recordings are welcome 💡
 
-  * Paimon.moe splits some achievements into checklists (e.g., 3 parts).
-  * This tool **only marks the first item** in such checklists **if** the main achievement is matched.
-  * ⚠️ You’ll need to manually mark the remaining checklist parts (usually <50).
+> 😅 I built this after manually marking over **1200 achievements** — a painfully tedious process. A friend refused to share her credentials (understandably), and most tools out there like Akasha Scanner or others rely on simulated key presses, which **violate Genshin Impact's policies** and can lead to **account bans**.
 
-* ❗ **Not 100% accurate:**
-
-  * A few achievements might remain unmarked — review and mark them manually.
-  * ✅ Still a huge time-saver: instead of manually marking 800, you'll likely only need to verify \~100–200 depending on what you’ve already done.
+> So I created the safest program that respects your account's privacy and doesn’t break the rules.
 
 ---
 
-## 📸 Screenshots & Demo
+## 📄 Coming Soon
 
-* 🖼️ Video/screenshot input: Only the right achievement list panel.
-* 🎞️ Demo: Scroll from first completed, 1080p, readable text.
-
-🎬 Submit your scroll video in issues if you’d like it featured!
-
----
-
-## 📝 To-Do (Planned Features)
-
-* [ ] GUI / No-code mode
-* [ ] Auto-update DB from paimon.moe.
-* [ ] Smart merging of older uploads files
-* [ ] Error/fuzzy matching insights
+* [ ] GUI
+* [ ] Auto-update achievement DB from paimon.moe
+* [ ] Auto-merge previous runs
+* [ ] Error viewer / matching confidence display
 
 ---
 
-## 🙌 Contribute or Suggest
+📘 Check out:
 
-Got ideas? PRs and issues welcome! Even just suggestions or video tests are appreciated 💡
-
----
-
-> 😅 I made this after manually marking 700+ achievements. A friend didn’t want to share her account, so I finally built this tool.
+* [`ADVANCED.md`](ADVANCED.md) — fine-tune configs
+* [`FAQ.md`](FAQ.md) — common questions
+* [`CHANGELOG.md`](CHANGELOG.md) — version history
 
 ---
 
-### Coming Soon
-📄 See [`ADVANCED.md`](ADVANCED.md) for config tweaks
-📄 See [`FAQ.md`](FAQ.md) for answers
-📄 See [`CHANGELOG.md`](CHANGELOG.md) for version history
+⭐ **Star this repo** if it helped you!
 
 ---
-
-⭐ Star this repo if it helped you!
