@@ -41,11 +41,11 @@ if __name__ == "__main__":
 
     ocr_extraction(MAIN_CONFIG_PATH)
 
-    # # STEP 3: Import Generation
+    # STEP 3: Import Generation
     from pipeline.import_generator import run_from_config as import_generation
 
     import_generation(MAIN_CONFIG_PATH)
 
-    # [Testing] Comparator
+    # TODO: [Testing] Comparator
     # from comparator import run_from_config as comparation
     # comparation(MAIN_CONFIG_PATH)
