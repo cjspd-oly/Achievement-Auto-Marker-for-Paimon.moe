@@ -38,6 +38,7 @@
    ```bash
    python main.py
    ```
+5. 📤 Upload latest file from `uploads/` to [paimon.moe](https://paimon.moe)
 
 ---
 
@@ -88,11 +89,11 @@ This initializes all folders and config files.
 
 3. 📤 Upload the file from the `uploads/` folder to [paimon.moe](https://paimon.moe)
 
-✅ That’s it! Just record → run → upload to paimon.moe.
+✅ That’s it! Just record → run → upload to [paimon.moe](https://paimon.moe).
 
 ---
 
-## 🔁 Merge Already Marked Achievements (From Paimon.moe)
+## 🔁 Merge Already Marked Achievements (From [Paimon.moe](https://paimon.moe))
 
 If you've already marked some achievements on [paimon.moe](https://paimon.moe):
 
@@ -207,7 +208,7 @@ threshold = 90 # 90 represents 90%
 ## 📄 Coming Soon
 
 * [ ] GUI
-* [ ] Auto-update achievement DB from paimon.moe
+* [ ] Auto-update achievement DB from [paimon.moe](https://paimon.moe)
 * [ ] Auto-merge previous runs
 * [ ] Error viewer / matching confidence display
 
