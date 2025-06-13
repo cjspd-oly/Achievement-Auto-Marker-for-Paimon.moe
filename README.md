@@ -2,7 +2,7 @@
 
 🎮 Automatically mark your **Genshin Impact achievements** using just a **video recording** — no login, no API, no hassle!
 
-> 🏆 Built for “Wonders of the World” (800+ achievements), but supports **all 1500+ achievements** if used in sections.
+> 🏆 Built for “Wonders of the World” (800+ achievements), but supports **all 1500+ achievements**.
 
 ---
 
@@ -45,17 +45,18 @@
 
 ✅ Best practices for best results:
 
-* Crop to **right-side achievement panel** only
-* Start from the **first completed** achievement
+* ❗Crop to **right-side achievement panel** only. (Mandatory)
+* ❗Start from the **first completed** achievement
+* ⏳ Keep video length near 30-60s for **Wonders Of World**, rest of the series can be 3-7s long.
+* Scroll **consistently with good speed** using scrollbar
 * Use **1080p or better** resolution
-* Scroll **slowly** using scrollbar
 * Use **60–120 FPS** if possible
 
 ---
 
-## 🧪 On My System (Performance Example)
+## 🧪 Actual Test Performance
 
-💻 Specs: RTX 3060, Ryzen 5 5600G, 16GB RAM
+💻 Specs: RTX 3060, Ryzen 5 5600G, 16gb RAM
 
 * GPU recommended
 * \~15 minutes per video of length 60s and 60fps
