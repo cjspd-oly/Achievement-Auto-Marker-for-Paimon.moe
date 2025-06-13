@@ -21,24 +21,40 @@
 
 ---
 
+## ⚙️ Prerequisite (Windows)
+
+To get started with the project on Windows, follow these steps:
+
+1. 🐍 **Install Python 3.13.x**
+   ➤ Download it from [python.org](https://www.python.org/downloads/windows/)
+   🔧 During installation, make sure to check ✅ **"Add Python to PATH"**
+
+2. 📂 **Navigate to the Project Folder**
+   ➤ Right-click inside the folder where `main.py` is located
+   ➤ Select **"Open in Terminal"** or use **Shift + Right Click → Open PowerShell/Terminal**
+
+3. 📦 **Install Required Packages**
+   In the terminal, run:
+
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+
+✅ Now you're ready to run the project!
+
+---
 ## 🚀 Quick Start
 
 1. 📸 Record a 60s video of your achievement list (right panel only).
 
 2. 💾 Save it as `sample.mp4` in the root folder.
 
-3. 🐍 Install dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. ▶️ Run the tool:
+3. ▶️ Run the tool:
 
    ```bash
    python main.py
    ```
-5. 📤 Upload latest file from `uploads/` to [paimon.moe](https://paimon.moe)
+4. 📤 Upload latest file from `uploads/` to [paimon.moe](https://paimon.moe)
 
 ---
 
