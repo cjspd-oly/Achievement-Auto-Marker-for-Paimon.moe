@@ -39,6 +39,15 @@ To get started with the project on Windows, follow these steps:
    ```bash
    python -m pip install -r requirements.txt
    ```
+4. Download [PyTorch](https://pytorch.org/get-started/locally/)
+   - If you have NVIDIA GPU (faster):
+     ```bash
+      pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+     ```
+   - If you have CPU Only (No NVIDIA GPU) (faster):
+     ```bash
+      pip3 install torch torchvision torchaudio
+     ```
 
 ✅ Now you're ready to run the project!
 
