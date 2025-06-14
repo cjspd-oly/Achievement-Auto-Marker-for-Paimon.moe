@@ -17,7 +17,7 @@
 ✅ Tested on 700+ achievements of **Wonders Of World** — 600+ matched correctly, **0 incorrect matches** (Wonders of the World only).
 ✅ Full 1500+ list yields **80–95% accuracy** depending on settings.
 
-⚠️ *It never falsely marks uncompleted achievements.*
+⚠️ _It never falsely marks uncompleted achievements._
 
 ---
 
@@ -33,25 +33,26 @@ To get started with the project on Windows, follow these steps:
    ➤ Right-click inside the folder where `main.py` is located
    ➤ Select **"Open in Terminal"** or use **Shift + Right Click → Open PowerShell/Terminal**
 
-3. 📦 **Install Required Packages**
+3. 📦 **Install** [**PyTorch**](https://pytorch.org/get-started/locally/)
+   - If you have NVIDIA GPU (faster):
+   ```bash
+    py -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+   ```
+   - If you have CPU Only (No NVIDIA GPU) (faster):
+   ```bash
+    py -m pip install torch torchvision torchaudio
+   ```
+4. 📦 **Install Required Packages**
    In the terminal, run:
 
    ```bash
-   python -m pip install -r requirements.txt
+   py -m pip install -r requirements.txt
    ```
-4. Download [PyTorch](https://pytorch.org/get-started/locally/)
-   - If you have NVIDIA GPU (faster):
-     ```bash
-      pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-     ```
-   - If you have CPU Only (No NVIDIA GPU) (faster):
-     ```bash
-      pip3 install torch torchvision torchaudio
-     ```
 
 ✅ Now you're ready to run the project!
 
 ---
+
 ## 🚀 Quick Start
 
 1. 📸 Record a 60s video of your achievement list (right panel only).
@@ -63,6 +64,7 @@ To get started with the project on Windows, follow these steps:
    ```bash
    python main.py
    ```
+
 4. 📤 Upload latest file from `uploads/` to [paimon.moe](https://paimon.moe)
 
 ---
@@ -71,12 +73,12 @@ To get started with the project on Windows, follow these steps:
 
 ✅ Best practices for best results:
 
-* ❗Crop to **right-side achievement panel** only. (Mandatory)
-* ❗Start from the **first completed** achievement
-* ⏳ Keep video length near 30-60s for **Wonders Of World**, rest of the series can be 3-7s long.
-* Scroll **consistently with good speed** using scrollbar
-* Use **1080p or better** resolution
-* Use **60–120 FPS** if possible
+- ❗Crop to **right-side achievement panel** only. (Mandatory)
+- ❗Start from the **first completed** achievement
+- ⏳ Keep video length near 30-60s for **Wonders Of World**, rest of the series can be 3-7s long.
+- Scroll **consistently with good speed** using scrollbar
+- Use **1080p or better** resolution
+- Use **60–120 FPS** if possible
 
 ---
 
@@ -84,9 +86,9 @@ To get started with the project on Windows, follow these steps:
 
 💻 Specs: RTX 3060, Ryzen 5 5600G, 16gb RAM
 
-* GPU recommended
-* \~15 minutes per video of length 60s and 60fps
-* OCR takes most of the time (rest finishes in 2–3 mins)
+- GPU recommended
+- \~15 minutes per video of length 60s and 60fps
+- OCR takes most of the time (rest finishes in 2–3 mins)
 
 ---
 
@@ -168,10 +170,10 @@ If you've already marked some achievements on [paimon.moe](https://paimon.moe):
 diff_threshold = 1000000
 ```
 
-* Filters out duplicate-looking frames
-* 🔼 Higher = stricter, fewer frames, faster
-* 🔽 Lower = more frames, better accuracy
-* 📌 Recommended: 500,000 to 2,000,000
+- Filters out duplicate-looking frames
+- 🔼 Higher = stricter, fewer frames, faster
+- 🔽 Lower = more frames, better accuracy
+- 📌 Recommended: 500,000 to 2,000,000
 
 ---
 
@@ -181,48 +183,48 @@ diff_threshold = 1000000
 threshold = 90 # 90 represents 90%
 ```
 
-* Controls fuzzy matching between OCR text and database
-* 🔼 Higher = fewer matches, less risk
-* 🔽 Lower = more matches, may include weak hits
-* 📌 Recommended: 82–92
-* ‼️Don't put 100. Or very close to 100.
+- Controls fuzzy matching between OCR text and database
+- 🔼 Higher = fewer matches, less risk
+- 🔽 Lower = more matches, may include weak hits
+- 📌 Recommended: 82–92
+- ‼️Don't put 100. Or very close to 100.
 
 ---
 
 ## 📁 Do Not Edit These Files
 
-* `data/` → Contains internal OCR data, extracted frames
-* `paimon_data/` → Holds the local Genshin DB. Update this after new game versions by replacing both `.json` files from repo
+- `data/` → Contains internal OCR data, extracted frames
+- `paimon_data/` → Holds the local Genshin DB. Update this after new game versions by replacing both `.json` files from repo
 
 ---
 
 ## ⚠️ Known Limitations
 
-* **Checklist Achievements:**
+- **Checklist Achievements:**
   If an achievement has a checklist (e.g., 3 parts), only the **first item** is auto-marked.
   You’ll need to mark the rest manually.
 
-* **English Only:**
+- **English Only:**
   Currently supports **English achievement titles only** — others will be skipped (not marked).
 
-* **Not Fully Accurate:**
+- **Not Fully Accurate:**
   Might miss a few achievements. Usually, you’ll only need to review \~50–75 manually.
 
 ---
 
 ## 🔒 100% Safe & Offline
 
-* ❌ No UID, login, or Genshin account required
-* ❌ No internet or API access needed
-* ✅ You just need a **scroll recording** — Genshin doesn’t even need to be installed
-* ✅ You control the upload — output stays on your device
+- ❌ No UID, login, or Genshin account required
+- ❌ No internet or API access needed
+- ✅ You just need a **scroll recording** — Genshin doesn’t even need to be installed
+- ✅ You control the upload — output stays on your device
 
 ---
 
 ## 🙌 Contributions & Feedback
 
-* Found bugs? Got an idea?
-* PRs, suggestions, and even scroll recordings are welcome 💡
+- Found bugs? Got an idea?
+- PRs, suggestions, and even scroll recordings are welcome 💡
 
 > 😅 I built this after manually marking over **1200 achievements** — a painfully tedious process. A friend refused to share her credentials (understandably), and most tools out there like Akasha Scanner or others rely on simulated key presses, which **violate Genshin Impact's policies** and can lead to **account bans**.
 
@@ -232,18 +234,18 @@ threshold = 90 # 90 represents 90%
 
 ## 📄 Coming Soon
 
-* [ ] GUI
-* [ ] Auto-update achievement DB from [paimon.moe](https://paimon.moe)
-* [ ] Auto-merge previous runs
-* [ ] Error viewer / matching confidence display
+- [ ] GUI
+- [ ] Auto-update achievement DB from [paimon.moe](https://paimon.moe)
+- [ ] Auto-merge previous runs
+- [ ] Error viewer / matching confidence display
 
 ---
 
 📘 Check out:
 
-* [`ADVANCED.md`](ADVANCED.md) — fine-tune configs
-* [`FAQ.md`](FAQ.md) — common questions
-* [`CHANGELOG.md`](CHANGELOG.md) — version history
+- [`ADVANCED.md`](ADVANCED.md) — fine-tune configs
+- [`FAQ.md`](FAQ.md) — common questions
+- [`CHANGELOG.md`](CHANGELOG.md) — version history
 
 ---
 
