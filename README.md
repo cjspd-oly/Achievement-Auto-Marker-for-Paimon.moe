@@ -1,6 +1,6 @@
 # 🌟 Achievement Auto-Marker for Paimon.moe
 
-🎮 Automatically mark your **Genshin Impact achievements** using just a **video recording** — no login, no API, no hassle!
+🎮 Automatically mark your **Genshin Impact achievements** using just a **recorded video** — no login, no API, no hassle!
 
 > 🏆 Built for “Wonders of the World” (800+ achievements), but supports **all 1500+ achievements**.
 
