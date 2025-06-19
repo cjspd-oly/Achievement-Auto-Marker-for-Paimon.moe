@@ -34,7 +34,7 @@ To get started with the project on Windows, follow these steps:
    ➤ Right-click inside the folder where `main.py` is located
    ➤ Select **"Open in Terminal"** or use **Shift + Right Click → Open PowerShell/Terminal**
 
-4. 📦 **Install** [**PyTorch**](https://pytorch.org/get-started/locally/)
+4. 📦 **Install** [**PyTorch**](https://pytorch.org/get-started/locally/) (Run below command)
    - If you have NVIDIA GPU (faster):
    ```bash
     py -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
