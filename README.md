@@ -26,14 +26,15 @@
 To get started with the project on Windows, follow these steps:
 
 1. 🐍 **Install Python 3.13.x**
-   ➤ Download it from [python.org](https://www.python.org/downloads/windows/)
+   ➤ Download it from [python.org](https://www.python.org/downloads/windows/) `OR`
+   ✅ Python v3.13.5: [download](https://www.python.org/ftp/python/3.13.5/python-3.13.5-amd64.exe)
    🔧 During installation, make sure to check ✅ **"Add Python to PATH"**
 
-2. 📂 **Navigate to the Project Folder**
+3. 📂 **Navigate to the Project Folder**
    ➤ Right-click inside the folder where `main.py` is located
    ➤ Select **"Open in Terminal"** or use **Shift + Right Click → Open PowerShell/Terminal**
 
-3. 📦 **Install** [**PyTorch**](https://pytorch.org/get-started/locally/)
+4. 📦 **Install** [**PyTorch**](https://pytorch.org/get-started/locally/)
    - If you have NVIDIA GPU (faster):
    ```bash
     py -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
@@ -42,7 +43,7 @@ To get started with the project on Windows, follow these steps:
    ```bash
     py -m pip install torch torchvision torchaudio
    ```
-4. 📦 **Install Required Packages**
+5. 📦 **Install Required Packages**
    In the terminal, run:
 
    ```bash
