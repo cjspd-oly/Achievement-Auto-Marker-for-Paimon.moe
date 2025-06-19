@@ -55,7 +55,7 @@ To get started with the project on Windows, follow these steps:
 ---
 
 ## 🚀 Quick Start
-
+> Download code from github:[link](https://github.com/cjspd-oly/Achievement-Auto-Marker-for-Paimon.moe/archive/refs/heads/main.zip) and extract zip file.
 1. 📸 Record a 60s video of your achievement list (right panel only).
 
 2. 💾 Save it as `sample.mp4` in the root folder.
