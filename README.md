@@ -1,4 +1,4 @@
-# 🌟 Paimon.moe Achievement Auto-Marker
+# 🌟 Achievement Auto-Marker for Paimon.moe
 
 🎮 Automatically mark your **Genshin Impact achievements** using just a **video recording** — no login, no API, no hassle!
 
