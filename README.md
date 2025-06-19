@@ -241,7 +241,7 @@ threshold = 90 # 90 represents 90%
 
 ---
 
-📘 Check out:
+📘 (InFuture) Check out:
 
 - [`ADVANCED.md`](ADVANCED.md) — fine-tune configs
 - [`FAQ.md`](FAQ.md) — common questions
