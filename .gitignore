@@ -1,6 +1,8 @@
 .vscode
 pipeline/__pycache__
-data/*
-logs/*
-config/*
-uploads/*
+data/
+logs/
+config/
+uploads/
+
+.non-github.archive/
