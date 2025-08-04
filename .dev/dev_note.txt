@@ -1,0 +1,1 @@
+document.querySelectorAll('input[type="checkbox"].w-0.h-0.opacity-0').forEach(cb => cb.click());
