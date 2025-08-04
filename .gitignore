@@ -1,2 +1,6 @@
-/.vscode
-/pipeline/__pycache__
+.vscode
+pipeline/__pycache__
+data/*
+logs/*
+config/*
+uploads/*
