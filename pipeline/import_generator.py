@@ -109,7 +109,7 @@ def create_default_config(config_path: str, main_config_path: str):
 
     input_section = {
         "titles_file": None,
-        "db_file": "paimon_data/db.json",
+        "db_file": "paimon_data/en.json",
         "import_file": fallback_file,
         "uploaded_file": fallback_file,
         "uploaded_file_dir": uploads_dir,
