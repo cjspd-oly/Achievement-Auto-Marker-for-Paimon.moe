@@ -42,7 +42,7 @@ def create_default_config(config_path: str):
             "folder": f"data/frames/{STEP_NAME}_{TIMESTAMP}"
         },
         "settings": {
-            "diff_threshold": 1000000,
+            "diff_threshold": 10_000_000,
             "save_first_frame": True,
             "verbose": True,
             "log_skipped_frames": False,

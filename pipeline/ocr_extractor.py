@@ -101,9 +101,12 @@ def extract_titles_from_images(config: dict):
 
     start_time = time.time()
 
-    for img_file in image_files:
+    for num, img_file in enumerate(image_files):
         img_path = os.path.join(input_folder, img_file)
-        log(f"Processing {img_file}...", verbose)
+        log(
+            f"Processing {img_file}... | Progress: {num/image_files.__len__():02f}%",
+            verbose,
+        )
 
         result = reader.readtext(img_path)
         lines = [detection[1].strip() for detection in result]

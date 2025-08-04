@@ -14,12 +14,14 @@ MERGE_LOG_FILE = os.path.join(LOG_DIR, f"{STEP_NAME}_merge_{TIMESTAMP}.log")
 MERGE_SUMMARY = {"updates": 0}
 MERGE_UPDATED_IDS = set()
 
+
 def ensure_directory_exists(path):
     if path and isinstance(path, str) and path.strip():
         try:
             os.makedirs(path, exist_ok=True)
         except (FileNotFoundError, OSError):
             pass
+
 
 def log(message: str, enabled: bool = True, merge: bool = False):
     if enabled:
@@ -29,16 +31,19 @@ def log(message: str, enabled: bool = True, merge: bool = False):
     with open(log_path, "a", encoding="utf-8") as f:
         f.write(message + "\n")
 
+
 def log_merge_summary():
     if MERGE_SUMMARY["updates"] > 0:
         log(f"\n[Merged] Total updated entries: {MERGE_SUMMARY['updates']}", merge=True)
     else:
         log("[Merged] No updates were made.", merge=True)
 
+
 def load_main_config(main_config_path: str) -> dict:
     if not os.path.exists(main_config_path):
         raise FileNotFoundError(f"Main config file not found: {main_config_path}")
     return toml.load(main_config_path)
+
 
 def load_step_config(step_config_path: str, main_config_path: str) -> dict:
     config = None
@@ -47,22 +52,24 @@ def load_step_config(step_config_path: str, main_config_path: str) -> dict:
         create_default_config(step_config_path, main_config_path)
     try:
         config = toml.load(step_config_path)
-        uploaded_file_path = resolve_uploaded_file(config.get("settings", {}), config.get("input", {}))
+        uploaded_file_path = resolve_uploaded_file(
+            config.get("settings", {}), config.get("input", {})
+        )
         config["input"]["uploaded_file"] = uploaded_file_path
     except Exception as e:
         raise RuntimeError(f"Failed to load or update step config: {e}")
     return config
+
 
 def get_latest_file_from_dirs(dirs):
     all_files = []
     for d in dirs:
         if os.path.exists(d):
             all_files.extend(
-                os.path.join(d, f)
-                for f in os.listdir(d)
-                if f.lower().endswith(".json")
+                os.path.join(d, f) for f in os.listdir(d) if f.lower().endswith(".json")
             )
     return max(all_files, key=os.path.getctime) if all_files else None
+
 
 def resolve_uploaded_file(settings, input_config):
     uploads_dir = "uploads"
@@ -85,12 +92,17 @@ def resolve_uploaded_file(settings, input_config):
             log(f"[Auto Merge] Using partial upload file: {partial_file}")
             return partial_file
         elif os.path.exists(fallback_file):
-            log(f"[Auto Merge] No uploads found, falling back to raw.json: {fallback_file}")
+            log(
+                f"[Auto Merge] No uploads found, falling back to raw.json: {fallback_file}"
+            )
             return fallback_file
         else:
-            raise FileNotFoundError("Merge enabled but no file available in uploads or raw.json")
+            raise FileNotFoundError(
+                "Merge enabled but no file available in uploads or raw.json"
+            )
     else:
         return fallback_file
+
 
 def create_default_config(config_path: str, main_config_path: str):
     uploads_dir = "uploads"
@@ -101,11 +113,7 @@ def create_default_config(config_path: str, main_config_path: str):
 
     fallback_file = "paimon_data/raw.json"
 
-    default_settings = {
-        "threshold": 90,
-        "verbose": True,
-        "merge_uploads": True
-    }
+    default_settings = {"threshold": 80, "verbose": True, "merge_uploads": True}
 
     input_section = {
         "titles_file": None,
@@ -120,7 +128,9 @@ def create_default_config(config_path: str, main_config_path: str):
         ocr_config_path = main_config.get("steps", {}).get("ocr_extraction", "")
         if ocr_config_path and os.path.exists(ocr_config_path):
             ocr_config = toml.load(ocr_config_path)
-            input_section["titles_file"] = ocr_config.get("output", {}).get("all_titles_file", None)
+            input_section["titles_file"] = ocr_config.get("output", {}).get(
+                "all_titles_file", None
+            )
     except Exception as e:
         print(f"[Warning] Failed to extract titles from OCR config: {e}")
 
@@ -140,6 +150,7 @@ def create_default_config(config_path: str, main_config_path: str):
     with open(config_path, "w") as f:
         toml.dump(default_config, f)
     print(f"Default config created at: {config_path}")
+
 
 def smart_merge_imports(current_data: dict, uploaded_data: dict) -> dict:
     def walk_paths(data, prefix=[]):
@@ -174,7 +185,6 @@ def smart_merge_imports(current_data: dict, uploaded_data: dict) -> dict:
 
     log_merge_summary()
     return current_data
-
 
 
 def match_and_update_import(config):
@@ -254,11 +264,13 @@ def match_and_update_import(config):
 
     matched_count, unmatched_count = 0, 0
 
+    matched_ids_set = set()
     for title in titles:
         best_match = get_best_match(title)
         if best_match:
             matched_name = best_match[0]
             matched_id = id_list[name_list.index(matched_name)]
+            matched_ids_set.add(matched_id)
             matched_score = best_match[1]
             matched_count += 1
 
@@ -268,18 +280,27 @@ def match_and_update_import(config):
                 verbose,
             )
 
+            found_in_any = False
             if "achievement" not in import_data or not isinstance(
                 import_data["achievement"], dict
             ):
                 import_data["achievement"] = {}
-            if "0" not in import_data["achievement"] or not isinstance(
-                import_data["achievement"]["0"], dict
-            ):
-                import_data["achievement"]["0"] = {}
 
-            ach = import_data["achievement"]["0"]
-            if str(matched_id) not in ach or not ach[str(matched_id)]:
-                ach[str(matched_id)] = True
+            if "achievement" not in import_data or not isinstance(
+                import_data["achievement"], dict
+            ):
+                import_data["achievement"] = {}
+
+            for section_key, section_data in import_data["achievement"].items():
+                if isinstance(section_data, dict) and str(matched_id) in section_data:
+                    if not section_data[str(matched_id)]:
+                        import_data["achievement"][section_key][str(matched_id)] = True
+                    found_in_any = True
+
+            if not found_in_any:
+                if "0" not in import_data["achievement"]:
+                    import_data["achievement"]["0"] = {}
+                import_data["achievement"]["0"][str(matched_id)] = True
 
             checklist = import_data.get("achievement-checklist", {})
             if str(matched_id) in checklist and isinstance(
@@ -290,12 +311,22 @@ def match_and_update_import(config):
                     and not checklist[str(matched_id)]["0"]
                 ):
                     checklist[str(matched_id)]["0"] = True
+            checklist = import_data.get("achievement-checklist", {})
+
+            if str(matched_id) not in checklist:
+                checklist[str(matched_id)] = {"0": True}
+            else:
+                for sub_key in checklist[str(matched_id)]:
+                    if checklist[str(matched_id)].get(sub_key) is False:
+                        checklist[str(matched_id)][sub_key] = True
+
         else:
             log(f"[NO MATCH] '{title}'", verbose)
             unmatched_count += 1
             with open(error_file, "a", encoding="utf-8") as ef:
                 ef.write(title + "\n")
 
+    log(f"Matched unique IDs: {len(matched_ids_set)}", True)
     ensure_directory_exists(os.path.dirname(final_import_file))
     with open(final_import_file, "w", encoding="utf-8") as f:
         json.dump(import_data, f, indent=4, ensure_ascii=False)
