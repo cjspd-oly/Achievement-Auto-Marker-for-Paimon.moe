@@ -35,16 +35,19 @@ if __name__ == "__main__":
     from pipeline.frame_extractor import run_from_config as frame_extraction
 
     frame_extraction(MAIN_CONFIG_PATH)
+    print("\n\n\n")
 
     # STEP 2: OCR Extraction
     from pipeline.ocr_extractor import run_from_config as ocr_extraction
 
     ocr_extraction(MAIN_CONFIG_PATH)
+    print("\n\n\n")
 
     # STEP 3: Import Generation
     from pipeline.import_generator import run_from_config as import_generation
 
     import_generation(MAIN_CONFIG_PATH)
+    print("\n\n\n")
 
     # TODO: [Testing] Comparator
     # from comparator import run_from_config as comparation
