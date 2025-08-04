@@ -104,7 +104,7 @@ def extract_titles_from_images(config: dict):
     for num, img_file in enumerate(image_files):
         img_path = os.path.join(input_folder, img_file)
         log(
-            f"Processing {img_file}... | Progress: {num/image_files.__len__():02f}%",
+            f"ProcessingFrame: {num} / {image_files.__len__()} | Progress: {num/image_files.__len__():.2f}%",
             verbose,
         )
 

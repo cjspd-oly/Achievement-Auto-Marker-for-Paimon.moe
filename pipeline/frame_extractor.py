@@ -7,7 +7,7 @@ from datetime import datetime
 import sys
 
 STEP_NAME = "frame_extraction"
-TIMESTAMP = datetime.now().strftime('%Y%m%d_%H%M%S')
+TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 LOG_DIR = "logs"
 MAIN_CONFIG_PATH = "config/main_config.toml"
 
@@ -35,19 +35,15 @@ def load_step_config(step_config_path: str, main_config_path: str) -> dict:
 
 def create_default_config(config_path: str):
     default_config = {
-        "video": {
-            "path": "sample.mp4"
-        },
-        "output": {
-            "folder": f"data/frames/{STEP_NAME}_{TIMESTAMP}"
-        },
+        "video": {"path": "sample.mp4"},
+        "output": {"folder": f"data/frames/{STEP_NAME}_{TIMESTAMP}"},
         "settings": {
             "diff_threshold": 10_000_000,
             "save_first_frame": True,
             "verbose": True,
             "log_skipped_frames": False,
-            "save_gray_diff_map": False
-        }
+            "save_gray_diff_map": False,
+        },
     }
     ensure_directory_exists(os.path.dirname(config_path))
     with open(config_path, "w") as f:
@@ -65,11 +61,13 @@ def format_time(seconds):
 def log(message: str, enabled: bool = True):
     if enabled:
         print(message)
-    with open(LOG_FILE, 'a') as f:
-        f.write(message + '\n')
+    with open(LOG_FILE, "a") as f:
+        f.write(message + "\n")
 
 
-def print_summary(frame_num: int, saved_frame_num: int, start_time: float, end_time: float):
+def print_summary(
+    frame_num: int, saved_frame_num: int, start_time: float, end_time: float
+):
     summary = (
         "\n=== Summary ===\n"
         f"Total frames scanned: {frame_num}\n"
@@ -87,7 +85,7 @@ def extract_unique_frames(
     save_first_frame: bool = True,
     verbose: bool = True,
     log_skipped_frames: bool = False,
-    save_gray_diff_map: bool = False
+    save_gray_diff_map: bool = False,
 ):
     ensure_directory_exists(output_folder)
 
@@ -111,6 +109,8 @@ def extract_unique_frames(
 
     start_time = time.time()
 
+    logged_steps = set()
+
     while cap.isOpened():
         try:
             ret, frame = cap.read()
@@ -120,7 +120,9 @@ def extract_unique_frames(
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
             if prev_gray is None and save_first_frame:
-                output_path = os.path.join(output_folder, f'frame_{saved_frame_num:04}.png')
+                output_path = os.path.join(
+                    output_folder, f"frame_{saved_frame_num:04}.png"
+                )
                 cv2.imwrite(output_path, frame)
                 log(f"[{saved_frame_num}] Saved first frame.", verbose)
                 saved_frame_num += 1
@@ -129,18 +131,34 @@ def extract_unique_frames(
                 diff_score = np.sum(diff)
 
                 if diff_score > diff_threshold:
-                    output_path = os.path.join(output_folder, f'frame_{saved_frame_num:04}.png')
+                    output_path = os.path.join(
+                        output_folder, f"frame_{saved_frame_num:04}.png"
+                    )
                     cv2.imwrite(output_path, frame)
-                    log(f"[{saved_frame_num}] Saved frame — diff: {diff_score}", verbose)
+                    log(
+                        f"[{saved_frame_num}] Saved frame — diff: {diff_score}", verbose
+                    )
                     if save_gray_diff_map:
-                        diff_map_path = os.path.join(output_folder, f'diff_{saved_frame_num:04}.png')
+                        diff_map_path = os.path.join(
+                            output_folder, f"diff_{saved_frame_num:04}.png"
+                        )
                         cv2.imwrite(diff_map_path, diff)
                     saved_frame_num += 1
                 else:
-                    log(f"[{frame_num}] Skipped — diff: {diff_score}", log_skipped_frames)
+                    log(
+                        f"[{frame_num}] Skipped — diff: {diff_score}",
+                        log_skipped_frames,
+                    )
 
             prev_gray = gray
             frame_num += 1
+
+            progress = int((frame_num / total_frames) * 100)
+            step = (progress // 10) * 10
+            if step not in logged_steps:
+                log(f"Progress: {progress}% | {frame_num} / {total_frames}")
+                logged_steps.add(step)
+
         except Exception as e:
             log(f"[Error] Frame {frame_num}: {e}", True)
             frame_num += 1
@@ -158,7 +176,9 @@ def run_from_config(main_config_path: str):
         step_config_path = main_config["steps"].get(STEP_NAME)
         config = load_step_config(step_config_path, main_config_path)
 
-        output_folder = config["output"].get("folder") or f"data/frame/{STEP_NAME}_{TIMESTAMP}"
+        output_folder = (
+            config["output"].get("folder") or f"data/frame/{STEP_NAME}_{TIMESTAMP}"
+        )
         ensure_directory_exists(output_folder)
 
         extract_unique_frames(
@@ -168,7 +188,7 @@ def run_from_config(main_config_path: str):
             save_first_frame=config["settings"].get("save_first_frame", True),
             verbose=config["settings"].get("verbose", True),
             log_skipped_frames=config["settings"].get("log_skipped_frames", False),
-            save_gray_diff_map=config["settings"].get("save_gray_diff_map", False)
+            save_gray_diff_map=config["settings"].get("save_gray_diff_map", False),
         )
     except Exception as e:
         log(f"[Fatal Error] {e}", True)
